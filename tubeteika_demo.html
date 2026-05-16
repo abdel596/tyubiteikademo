@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Тюбетейка — Чайхана · Алматы</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-dark: #8B6914;
+    --dark: #0D0907;
+    --dark-2: #150E08;
+    --dark-3: #1E1409;
+    --dark-4: #261A0C;
+    --cream: #F5EDD8;
+    --cream-muted: #B8A882;
+    --border: rgba(201,168,76,0.18);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--dark); color: var(--cream); font-family: 'Raleway', sans-serif; font-weight: 300; overflow-x: hidden; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 20px 48px; background: rgba(13,9,7,0.97); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 300; letter-spacing: 4px; color: var(--gold); text-transform: uppercase; }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a { color: var(--cream-muted); text-decoration: none; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; transition: color 0.3s; }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta { background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 10px 22px; font-family: 'Raleway', sans-serif; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
+  .nav-cta:hover { background: var(--gold); color: var(--dark); }
+
+  .hero { height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .hero-bg { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(13,9,7,0.2) 0%, rgba(13,9,7,0.6) 55%, rgba(13,9,7,1) 100%), url('https://images.unsplash.com/photo-1559339352-11d035aa65de?w=1800&q=80') center/cover; }
+  .hero-content { position: relative; text-align: center; z-index: 2; animation: fadeUp 1.4s ease both; }
+  .hero-eyebrow { font-size: 11px; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+  .hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(64px, 11vw, 130px); font-weight: 300; line-height: 0.9; color: var(--cream); letter-spacing: 2px; margin-bottom: 8px; }
+  .hero-title em { font-style: italic; color: var(--gold-light); }
+  .hero-sub { font-family: 'Cormorant Garamond', serif; font-size: clamp(14px, 2vw, 20px); font-style: italic; color: var(--cream-muted); margin: 16px 0 48px; letter-spacing: 1px; }
+  .hero-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary { background: var(--gold); color: var(--dark); border: none; padding: 15px 38px; font-family: 'Raleway', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+  .btn-ghost { background: transparent; color: var(--cream-muted); border: 1px solid rgba(201,168,76,0.3); padding: 15px 38px; font-family: 'Raleway', sans-serif; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+  .scroll-hint { position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--cream-muted); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; animation: bounce 2.2s infinite; }
+  .scroll-line { width: 1px; height: 36px; background: linear-gradient(to bottom, var(--gold), transparent); }
+
+  .stats-strip { display: grid; grid-template-columns: repeat(4, 1fr); background: var(--dark-4); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .stat-item { padding: 32px 24px; text-align: center; border-right: 1px solid rgba(201,168,76,0.1); }
+  .stat-item:last-child { border-right: none; }
+  .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 300; color: var(--gold); line-height: 1; margin-bottom: 8px; }
+  .stat-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--cream-muted); }
+
+  .about { padding: 110px 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; max-width: 1200px; margin: 0 auto; align-items: center; }
+  .about-label { font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; }
+  .about-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 4vw, 50px); font-weight: 300; line-height: 1.15; color: var(--cream); margin-bottom: 24px; }
+  .about-title em { font-style: italic; color: var(--gold-light); }
+  .about-text { font-size: 14px; line-height: 1.95; color: var(--cream-muted); margin-bottom: 14px; }
+  .about-image { position: relative; aspect-ratio: 3/4; }
+  .about-image img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.75) saturate(0.7); }
+  .about-image::before { content: ''; position: absolute; top: -16px; right: -16px; width: 55%; height: 55%; border: 1px solid rgba(201,168,76,0.2); z-index: -1; }
+
+  .menu-section { padding: 100px 48px; background: var(--dark-2); }
+  .section-header { text-align: center; margin-bottom: 52px; }
+  .section-label { font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 5vw, 54px); font-weight: 300; color: var(--cream); line-height: 1.1; }
+  .section-title em { font-style: italic; color: var(--gold-light); }
+  .gold-divider { width: 50px; height: 1px; background: var(--gold); margin: 18px auto 0; }
+  .menu-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-bottom: 44px; }
+  .menu-tab { background: transparent; border: 1px solid rgba(201,168,76,0.2); color: var(--cream-muted); padding: 9px 20px; font-family: 'Raleway', sans-serif; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; transition: all 0.25s; }
+  .menu-tab:hover { border-color: var(--gold); color: var(--gold); }
+  .menu-tab.active { background: var(--gold); border-color: var(--gold); color: var(--dark); font-weight: 500; }
+  .menu-panel { display: none; max-width: 960px; margin: 0 auto; }
+  .menu-panel.active { display: block; }
+  .menu-items-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+  .menu-item { background: var(--dark-3); padding: 14px 18px; display: flex; justify-content: space-between; align-items: baseline; gap: 12px; transition: background 0.2s; }
+  .menu-item:hover { background: rgba(201,168,76,0.06); }
+  .menu-item-info { flex: 1; }
+  .menu-item-name { font-size: 14px; color: var(--cream); margin-bottom: 3px; }
+  .menu-item-desc { font-size: 11px; color: var(--cream-muted); line-height: 1.4; font-style: italic; }
+  .menu-item-price { font-family: 'Cormorant Garamond', serif; font-size: 17px; color: var(--gold); white-space: nowrap; }
+
+  .locations { padding: 100px 48px; max-width: 1200px; margin: 0 auto; }
+  .locations-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; margin-top: 56px; }
+  .location-card { background: var(--dark-3); padding: 44px 36px; position: relative; }
+  .location-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(to right, transparent, var(--gold), transparent); }
+  .location-name { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 300; color: var(--cream); margin-bottom: 16px; }
+  .location-addr { font-size: 14px; color: var(--cream-muted); line-height: 1.7; margin-bottom: 12px; }
+  .location-hours { font-size: 12px; color: var(--gold); letter-spacing: 1px; }
+
+  .info-strip { background: var(--dark-4); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 52px 48px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+  .info-block { text-align: center; }
+  .info-icon { font-size: 24px; margin-bottom: 14px; }
+  .info-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+  .info-value { font-family: 'Cormorant Garamond', serif; font-size: 16px; color: var(--cream); line-height: 1.7; }
+
+  .contact { padding: 110px 48px; text-align: center; position: relative; overflow: hidden; }
+  .contact::before { content: 'ТЮБЕТЕЙКА'; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-family: 'Cormorant Garamond', serif; font-size: 120px; font-weight: 300; color: rgba(201,168,76,0.03); white-space: nowrap; pointer-events: none; }
+  .contact-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 5vw, 62px); font-weight: 300; color: var(--cream); margin-bottom: 16px; position: relative; }
+  .contact-title em { font-style: italic; color: var(--gold-light); }
+  .contact-sub { font-size: 13px; color: var(--cream-muted); margin-bottom: 44px; position: relative; }
+  .contact-phone { font-family: 'Cormorant Garamond', serif; font-size: clamp(24px, 3.5vw, 44px); font-weight: 300; color: var(--gold); text-decoration: none; display: block; margin-bottom: 36px; letter-spacing: 2px; transition: color 0.3s; position: relative; }
+  .contact-phone:hover { color: var(--gold-light); }
+  .contact-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; position: relative; }
+
+  footer { padding: 40px 48px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+  .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 18px; letter-spacing: 4px; color: var(--gold); text-transform: uppercase; }
+  .footer-text { font-size: 12px; color: var(--cream-muted); }
+  .footer-links { display: flex; gap: 20px; }
+  .footer-links a { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--cream-muted); text-decoration: none; transition: color 0.3s; }
+  .footer-links a:hover { color: var(--gold); }
+
+  .demo-badge { position: fixed; bottom: 20px; right: 20px; background: var(--gold); color: var(--dark); padding: 9px 16px; font-size: 11px; letter-spacing: 1px; font-weight: 500; z-index: 999; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(8px); } }
+  .fade-in { opacity: 0; transform: translateY(22px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Тюбетейка</div>
+  <ul class="nav-links">
+    <li><a href="javascript:void(0)" onclick="document.getElementById('menu').scrollIntoView({behavior:'smooth'})">Меню</a></li>
+    <li><a href="javascript:void(0)" onclick="document.getElementById('locations').scrollIntoView({behavior:'smooth'})">Адреса</a></li>
+    <li><a href="javascript:void(0)" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Контакты</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Забронировать</button>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Чайхана · Узбекская кухня · Алматы</p>
+    <h1 class="hero-title"><em>Тюбетейка</em></h1>
+    <p class="hero-sub">Восточное гостеприимство уже 10 лет</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="document.getElementById('menu').scrollIntoView({behavior:'smooth'})">Смотреть меню</button>
+      <button class="btn-ghost" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Забронировать стол</button>
+    </div>
+  </div>
+  <div class="scroll-hint"><div class="scroll-line"></div><span>Листать</span></div>
+</section>
+
+<div class="stats-strip">
+  <div class="stat-item fade-in"><div class="stat-num">10+</div><div class="stat-label">Лет на рынке</div></div>
+  <div class="stat-item fade-in"><div class="stat-num">15K</div><div class="stat-label">Подписчиков</div></div>
+  <div class="stat-item fade-in"><div class="stat-num">2</div><div class="stat-label">Ресторана в Алматы</div></div>
+  <div class="stat-item fade-in"><div class="stat-num">100+</div><div class="stat-label">Рецептов плова</div></div>
+</div>
+
+<section class="about">
+  <div class="fade-in">
+    <p class="about-label">О чайхане</p>
+    <h2 class="about-title">Сказочная <em>Бухара</em><br>в сердце Алматы</h2>
+    <p class="about-text">Тюбетейка — домашний ресторан национальной кухни с десятилетней историей. Интерьер переносит в сказочную Бухару: мозаика, ковры, топчаны и восточный колорит.</p>
+    <p class="about-text">Шеф-повар Сабит-ака со стажем 40 лет готовит узбекский плов по уникальным рецептам. Рис и морковь заказывает только у проверенных поставщиков с ташкентского базара.</p>
+    <p class="about-text">VIP-зал, топчаны, банкеты, летняя веранда, детская комната. Молельная комната, меню на английском языке.</p>
+  </div>
+  <div class="about-image fade-in">
+    <img src="https://images.unsplash.com/photo-1567521464027-f127ff144326?w=800&q=80" alt="Тюбетейка">
+  </div>
+</section>
+
+<section class="menu-section" id="menu">
+  <div class="section-header fade-in">
+    <p class="section-label">Меню</p>
+    <h2 class="section-title">Вкус <em>Востока</em></h2>
+    <div class="gold-divider"></div>
+  </div>
+
+  <div class="menu-tabs">
+    <button class="menu-tab active" onclick="showTab('salads',this)">Салаты</button>
+    <button class="menu-tab" onclick="showTab('snacks',this)">Закуски</button>
+    <button class="menu-tab" onclick="showTab('soups',this)">Супы</button>
+    <button class="menu-tab" onclick="showTab('plov',this)">Плов</button>
+    <button class="menu-tab" onclick="showTab('manti',this)">Манты и лапша</button>
+    <button class="menu-tab" onclick="showTab('shashlik',this)">Шашлыки</button>
+    <button class="menu-tab" onclick="showTab('hot',this)">Горячее</button>
+    <button class="menu-tab" onclick="showTab('pastry',this)">Выпечка</button>
+    <button class="menu-tab" onclick="showTab('desserts',this)">Десерты и чай</button>
+    <button class="menu-tab" onclick="showTab('banket',this)">Банкетное меню</button>
+  </div>
+
+  <div id="tab-salads" class="menu-panel active">
+    <div class="menu-items-grid">
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Ачучук</div><div class="menu-item-desc">Узбекский салат к плову</div></div><span class="menu-item-price">2 300 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Тамила</div><div class="menu-item-desc">Запечённая тыква и руккола</div></div><span class="menu-item-price">3 100 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Бонжур</div><div class="menu-item-desc">Куриное филе, красная и цветная капуста, шампиньоны, болгарский перец</div></div><span class="menu-item-price">2 700 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Богема</div><div class="menu-item-desc">Пекинская капуста, томаты черри, брынза, болгарский перец</div></div><span class="menu-item-price">3 500 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Райхон</div><div class="menu-item-desc">Помидоры, огурцы, зелень</div></div><span class="menu-item-price">4 100 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Каракоз</div><div class="menu-item-desc">Восточная версия греческого салата</div></div><span class="menu-item-price">4 200 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Лола</div><div class="menu-item-desc">Свекольный салат с сыром фета</div></div><span class="menu-item-price">4 200 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Падишах</div><div class="menu-item-desc">Тёплый салат с говядиной, шампиньонами и болгарским перцем</div></div><span class="menu-item-price">4 950 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Цезарь</div><div class="menu-item-desc">С куриным филе / малосольной сёмгой</div></div><span class="menu-item-price">4 300 / 4 900 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Шахрисабз</div><div class="menu-item-desc">С малосолёной сёмгой на подушке айсберг</div></div><span class="menu-item-price">4 700 ₸</span></div>
+    </div>
+  </div>
+
+  <div id="tab-snacks" class="menu-panel">
+    <div class="menu-items-grid">
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Сюзьма</div><div class="menu-item-desc">Йогурт с зеленью</div></div><span class="menu-item-price">2 400 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Фунчеза</div><div class="menu-item-desc">С жареной говядиной</div></div><span class="menu-item-price">4 100 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Сёмга малосолёная</div><div class="menu-item-desc">По фирменному рецепту</div></div><span class="menu-item-price">6 200 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Конское ассорти</div><div class="menu-item-desc">Казы, жая в нарезке</div></div><span class="menu-item-price">7 100 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Китайские баклажаны</div><div class="menu-item-desc">В кляре с соусом чили и помидорами черри</div></div><span class="menu-item-price">4 700 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Икра баклажанная</div><div class="menu-item-desc">Домашнего приготовления</div></div><span class="menu-item-price">4 500 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Ребрышки ягнёнка</div><div class="menu-item-desc">Горка медовых косточек</div></div><span class="menu-item-price">5 000 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Разносолы</div><div class="menu-item-desc">Маринованная капуста, малосольные огурцы и помидоры</div></div><span class="menu-item-price">4 400 ₸</span></div>
+    </div>
+  </div>
+
+  <div id="tab-soups" class="menu-panel">
+    <div class="menu-items-grid">
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Казахская сорпа</div><div class="menu-item-desc">С мясом ягнёнка</div></div><span class="menu-item-price">4 200 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Бозбаш</div><div class="menu-item-desc">Томлённая лытка ягнёнка с овощами и нутом</div></div><span class="menu-item-price">3 500 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Узбекская шурва</div><div class="menu-item-desc">Из баранины с овощами</div></div><span class="menu-item-price">3 850 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Чучвара</div><div class="menu-item-desc">Узбекские пельмешки с мясной подливкой</div></div><span class="menu-item-price">3 900 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Уха ханская</div><div class="menu-item-desc">Наваристая уха из сёмги</div></div><span class="menu-item-price">3 800 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Солянка восточная</div><div class="menu-item-desc">С кониной и говядиной</div></div><span class="menu-item-price">4 200 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Мампар</div><div class="menu-item-desc">Наваристый уйгурский суп</div></div><span class="menu-item-price">3 700 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Байский борщ</div><div class="menu-item-desc">С кониной</div></div><span class="menu-item-price">4 000 ₸</span></div>
+    </div>
+  </div>
+
+  <div id="tab-plov" class="menu-panel">
+    <div class="menu-items-grid">
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Плов Той Оши</div><div class="menu-item-desc">Наш знаменитый праздничный плов</div></div><span class="menu-item-price">4 300 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Плов Чайхона</div><div class="menu-item-desc">Коричневый плов с барбарисом</div></div><span class="menu-item-price">4 100 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Плов Самарканд</div><div class="menu-item-desc">Лёгкий плов с курицей и красной морковью</div></div><span class="menu-item-price">3 800 ₸</span></div>
+    </div>
+    <div style="margin-top: 2px; padding: 14px 18px; background: rgba(201,168,76,0.08); text-align:center; font-size: 13px; color: var(--gold); letter-spacing: 1px; font-style: italic; font-family: 'Cormorant Garamond', serif; font-size: 16px;">
+      К любому плову + Салат Ачучук в подарок
+    </div>
+  </div>
+
+  <div id="tab-manti" class="menu-panel">
+    <div class="menu-items-grid">
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Манты с кониной / говядиной / бараниной</div><div class="menu-item-desc">3 шт / 5 шт</div></div><span class="menu-item-price">3 400 / 3 700 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Манты с тыквой / капустой</div></div><span class="menu-item-price">от 2 800 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Суйру Лагман / Ганфан</div><div class="menu-item-desc">Тянутая лапша / рис с жидкой мясной подливой</div></div><span class="menu-item-price">3 800 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Гуйру Лагман</div><div class="menu-item-desc">Тянутая лапша с жареным мясом и овощами</div></div><span class="menu-item-price">3 800 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Каурма Лагман</div><div class="menu-item-desc">Жареный лагман</div></div><span class="menu-item-price">3 850 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Беспармак</div><div class="menu-item-desc">С бараниной и кониной</div></div><span class="menu-item-price">6 400 ₸</span></div>
+    </div>
+  </div>
+
+  <div id="tab-shashlik" class="menu-panel">
+    <div class="menu-items-grid">
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Узбекские шашлычки</div><div class="menu-item-desc">Баранина с жирком на двух шпажках</div></div><span class="menu-item-price">4 100 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Шашлычки Чор-су</div><div class="menu-item-desc">Баранина с курдюком в хлебной корочке</div></div><span class="menu-item-price">3 800 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Шашлык из баранины</div><div class="menu-item-desc">Мякоть баранины по-кавказски на углях</div></div><span class="menu-item-price">4 100 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Антрекот из баранины</div></div><span class="menu-item-price">6 200 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Люля-кебаб</div><div class="menu-item-desc">Рублёная баранина по-кавказски в лаваше</div></div><span class="menu-item-price">3 700 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Шашлык из куриного филе</div><div class="menu-item-desc">Кусочки грудки на углях</div></div><span class="menu-item-price">3 700 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Шашлык из утки</div><div class="menu-item-desc">Грудка утки по-кавказски</div></div><span class="menu-item-price">3 900 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Большое ассорти на компанию</div><div class="menu-item-desc">Баранина 2, антрекот 2, люля 2, филе курицы 2, утка 2</div></div><span class="menu-item-price">44 700 ₸</span></div>
+    </div>
+  </div>
+
+  <div id="tab-hot" class="menu-panel">
+    <div class="menu-items-grid">
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Казы сырне</div><div class="menu-item-desc">Конские рёбра с картофелем</div></div><span class="menu-item-price">8 800 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Деликатесы из ягнёнка</div><div class="menu-item-desc">Язык ягнёнка, лытки, домашние колбаски хасып</div></div><span class="menu-item-price">8 600 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Медальоны из конины</div><div class="menu-item-desc">На гриле с брынзой и овощами</div></div><span class="menu-item-price">6 700 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Казан кабоб</div><div class="menu-item-desc">Баранина с картофелем в узбекских специях</div></div><span class="menu-item-price">7 600 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Димляма кабоб</div><div class="menu-item-desc">Мясо ягнёнка с овощами в казане</div></div><span class="menu-item-price">6 400 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Кабырга</div><div class="menu-item-desc">Рёберная часть ягнёнка в рулете, салат Бонжур и красный соус</div></div><span class="menu-item-price">4 850 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Куырдак</div><div class="menu-item-desc">Бараньи внутренности, тушёные с картошечкой</div></div><span class="menu-item-price">5 600 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Филе лосося</div><div class="menu-item-desc">На гриле / на пару с овощами гриль</div></div><span class="menu-item-price">7 200 ₸</span></div>
+    </div>
+  </div>
+
+  <div id="tab-pastry" class="menu-panel">
+    <div class="menu-items-grid">
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Самса тандырная с говядиной</div></div><span class="menu-item-price">1 800 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Самса тандырная с бараниной</div></div><span class="menu-item-price">1 450 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Самса слоёная с мясом / курицей</div></div><span class="menu-item-price">1 600 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Жилик Май Самса</div><div class="menu-item-desc">Мозговая косточка в тесте, запечённая в тандыре</div></div><span class="menu-item-price">3 600 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Чебурек с мясом</div></div><span class="menu-item-price">1 800 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Хычина</div><div class="menu-item-desc">С картофелем и брынзой</div></div><span class="menu-item-price">2 150 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Баурсаки</div><div class="menu-item-desc">Горка баурсаков от апашки</div></div><span class="menu-item-price">1 500 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Лепёшка узбекская тандыр</div></div><span class="menu-item-price">1 100 ₸</span></div>
+    </div>
+  </div>
+
+  <div id="tab-desserts" class="menu-panel">
+    <div class="menu-items-grid">
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Казахские сладости</div><div class="menu-item-desc">Иримшик 3 вида, жент и нават</div></div><span class="menu-item-price">5 100 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Восточные сладости</div><div class="menu-item-desc">Ассорти сухофруктов и орехов</div></div><span class="menu-item-price">5 500 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Чак-чак</div></div><span class="menu-item-price">2 100 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Фисташковая панна котта</div><div class="menu-item-desc">С малиновым соусом</div></div><span class="menu-item-price">2 900 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Фирменный чай (1L)</div><div class="menu-item-desc">Имбирный, ромашковый, облепиховый, марокканский, вишнёвый</div></div><span class="menu-item-price">2 600 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Чай Узбекский / Жасмин / Эрл Грей</div><div class="menu-item-desc">Средний / Большой</div></div><span class="menu-item-price">2 000 / 2 300 ₸</span></div>
+    </div>
+  </div>
+
+  <div id="tab-banket" class="menu-panel">
+    <div class="menu-items-grid">
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Той Бесбармак из конины и баранины</div><div class="menu-item-desc">Жамбас, жилик, корейка ягнёнка, казы, жая (10 персон)</div></div><span class="menu-item-price">86 000 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Сырне из молодого ягнёнка</div><div class="menu-item-desc">20–25 персон</div></div><span class="menu-item-price">176 000 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Ягнёнок запечённый целиком</div><div class="menu-item-desc">С картофелем и домашними разносолами</div></div><span class="menu-item-price">190 000 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Мясной микс</div><div class="menu-item-desc">Рёбрышки ягнёнка, рёбра конины, медальоны из говядины и конины (8–12 персон)</div></div><span class="menu-item-price">69 000 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Хан Плов</div><div class="menu-item-desc">Плов в виде торта в корочке из теста с бараниной (10 персон)</div></div><span class="menu-item-price">37 000 ₸</span></div>
+      <div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">Казан Кебаб</div><div class="menu-item-desc">С мясом ягнёнка и картофелем (10 персон)</div></div><span class="menu-item-price">63 000 ₸</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="locations" id="locations">
+  <div class="section-header fade-in">
+    <p class="section-label">Адреса</p>
+    <h2 class="section-title">Два ресторана <em>в Алматы</em></h2>
+    <div class="gold-divider"></div>
+  </div>
+  <div class="locations-grid">
+    <div class="location-card fade-in">
+      <div class="location-name">Тюбетейка на Сатпаева</div>
+      <div class="location-addr">ул. Каныша Сатпаева, 32/1<br>р. Есентай, Алматы<br>До 120 мест · Своя пивоварня · Топчаны · VIP-зал</div>
+      <div class="location-hours">🕐 12:00 — 00:00 · Ежедневно</div>
+    </div>
+    <div class="location-card fade-in">
+      <div class="location-name">Тюбетейка Самал</div>
+      <div class="location-addr">мкр. Самал-1, 2<br>Алматы<br>До 70 мест · Летняя терраса · Кабинки · VIP-зал</div>
+      <div class="location-hours">🕐 12:00 — 00:00 · Ежедневно</div>
+    </div>
+  </div>
+</section>
+
+<div class="info-strip">
+  <div class="info-block fade-in"><div class="info-icon">🕌</div><div class="info-label">Особенности</div><div class="info-value">Молельная комната<br>Поминальные обеды</div></div>
+  <div class="info-block fade-in"><div class="info-icon">🎉</div><div class="info-label">Мероприятия</div><div class="info-value">Банкеты и тои<br>Детские праздники</div></div>
+  <div class="info-block fade-in"><div class="info-icon">🅿️</div><div class="info-label">Парковка</div><div class="info-value">Бесплатная<br>охраняемая</div></div>
+  <div class="info-block fade-in"><div class="info-icon">🌙</div><div class="info-label">Ифтар меню</div><div class="info-value">Специальное меню<br>в Рамадан</div></div>
+</div>
+
+<section class="contact" id="contact">
+  <p class="section-label">Бронирование</p>
+  <h2 class="contact-title">Забронируйте <em>ваш стол</em></h2>
+  <div class="gold-divider" style="margin: 20px auto 32px;"></div>
+  <p class="contact-sub">Звоните или пишите — ответим быстро</p>
+  <a href="tel:+77015897619" class="contact-phone">+7 701 589 76 19</a>
+  <div class="contact-actions">
+    <button class="btn-primary" onclick="window.open('https://wa.me/77015897619','_blank')">Написать в WhatsApp</button>
+    <button class="btn-ghost" onclick="window.open('https://www.instagram.com/tubeteika_kz','_blank')">Instagram @tubeteika_kz</button>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Тюбетейка</div>
+  <div class="footer-text">© 2025 Тюбетейка · Сатпаева 32/1 и Самал-1, 2 · Алматы</div>
+  <div class="footer-links">
+    <a href="javascript:void(0)" onclick="window.open('https://www.instagram.com/tubeteika_kz','_blank')">Instagram</a>
+    <a href="javascript:void(0)" onclick="window.open('https://wa.me/77015897619','_blank')">WhatsApp</a>
+  </div>
+</footer>
+
+<div class="demo-badge">✦ Демо-версия сайта</div>
+
+<script>
+  function showTab(name, btn) {
+    document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    btn.classList.add('active');
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
